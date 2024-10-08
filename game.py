@@ -2,7 +2,7 @@ import pygame
 import serial
 
 pygame.init()
-screen = pygame.display.set_mode((800, 600))
+screen = pygame.display.set_mode((810, 570))
 clock = pygame.time.Clock()
 
 # arduino = serial.Serial('COM3', 9600)
@@ -10,19 +10,168 @@ clock = pygame.time.Clock()
 x, y = 40, 35
 radius = 10
 
-walls = [
-    # x, y, largura, altura
-    pygame.Rect(0, 0, 800, 10),   # Parede superior
-    pygame.Rect(0, 0, 10, 600),   # Parede esquerda
-    pygame.Rect(0, 590, 800, 10), # Parede inferior
-    pygame.Rect(790, 0, 10, 600), # Parede direita
+gap = 80  # Espaçamento entre as paredes
+wall_thickness = 10  # Espessura das paredes
+wall_height = 80  # Altura das paredes horizontais
+wall_length = 80  # Comprimento das paredes horizontais
 
-    pygame.Rect(70, 0, 10, 190),
-    pygame.Rect(70, 260, 10, 330),
-    pygame.Rect(70, 190, 70, 10),
-    pygame.Rect(140, 70, 10, 290),
-    pygame.Rect(210, 70, 10, 290),
-    pygame.Rect(280, 70, 10, 290),
+walls = [
+    # Paredes externas (bordas da tela)
+    pygame.Rect(0, 0, 810, wall_thickness),  # Parede superior
+    pygame.Rect(0, 0, wall_thickness, 570),  # Parede esquerda
+    pygame.Rect(0, 570 - wall_thickness, 810, wall_thickness),  # Parede inferior
+    pygame.Rect(810 - wall_thickness, 0, wall_thickness, 570),  # Parede direita
+
+    # pygame.Rect(1 * gap, wall_thickness, wall_thickness, wall_height),
+    pygame.Rect(2 * gap, wall_thickness, wall_thickness, wall_height),
+    # pygame.Rect(3 * gap, wall_thickness, wall_thickness, wall_height),
+    pygame.Rect(4 * gap, wall_thickness, wall_thickness, wall_height),
+    # pygame.Rect(5 * gap, wall_thickness, wall_thickness, wall_height),
+    # pygame.Rect(6 * gap, wall_thickness, wall_thickness, wall_height),
+    pygame.Rect(7 * gap, wall_thickness, wall_thickness, wall_height),
+    # pygame.Rect(8 * gap, wall_thickness, wall_thickness, wall_height),
+    # pygame.Rect(9 * gap, wall_thickness, wall_thickness, wall_height),
+    pygame.Rect(10 * gap, wall_thickness, wall_thickness, wall_height),
+
+    pygame.Rect(1 * gap, wall_thickness + wall_height, wall_thickness, wall_height),
+    # pygame.Rect(2 * gap, wall_thickness + wall_height, wall_thickness, wall_height),
+    # pygame.Rect(3 * gap, wall_thickness + wall_height, wall_thickness, wall_height),
+    pygame.Rect(4 * gap, wall_thickness + wall_height, wall_thickness, wall_height),
+    pygame.Rect(5 * gap, wall_thickness + wall_height, wall_thickness, wall_height),
+    pygame.Rect(6 * gap, wall_thickness + wall_height, wall_thickness, wall_height),
+    # pygame.Rect(7 * gap, wall_thickness + wall_height, wall_thickness, wall_height),
+    # pygame.Rect(8 * gap, wall_thickness + wall_height, wall_thickness, wall_height),
+    pygame.Rect(9 * gap, wall_thickness + wall_height, wall_thickness, wall_height),
+    pygame.Rect(10 * gap, wall_thickness + wall_height, wall_thickness, wall_height),
+
+    pygame.Rect(1 * gap, wall_thickness + ( 2 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(2 * gap, wall_thickness + ( 2 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(3 * gap, wall_thickness + ( 2 * wall_height), wall_thickness, wall_height),
+    pygame.Rect(4 * gap, wall_thickness + ( 2 * wall_height), wall_thickness, wall_height),
+    pygame.Rect(5 * gap, wall_thickness + ( 2 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(6 * gap, wall_thickness + ( 2 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(7 * gap, wall_thickness + ( 2 * wall_height), wall_thickness, wall_height),
+    pygame.Rect(8 * gap, wall_thickness + ( 2 * wall_height), wall_thickness, wall_height),
+    pygame.Rect(9 * gap, wall_thickness + ( 2 * wall_height), wall_thickness, wall_height),
+    pygame.Rect(10 * gap, wall_thickness + ( 2 * wall_height), wall_thickness, wall_height),
+
+    pygame.Rect(1 * gap, wall_thickness + ( 3 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(2 * gap, wall_thickness + ( 3 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(3 * gap, wall_thickness + ( 3 * wall_height), wall_thickness, wall_height),
+    pygame.Rect(4 * gap, wall_thickness + ( 3 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(5 * gap, wall_thickness + ( 3 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(6 * gap, wall_thickness + ( 3 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(7 * gap, wall_thickness + ( 3 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(8 * gap, wall_thickness + ( 3 * wall_height), wall_thickness, wall_height),
+    pygame.Rect(9 * gap, wall_thickness + ( 3 * wall_height), wall_thickness, wall_height),
+    pygame.Rect(10 * gap, wall_thickness + ( 3 * wall_height), wall_thickness, wall_height),
+
+    # pygame.Rect(1 * gap, wall_thickness + ( 4 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(2 * gap, wall_thickness + ( 4 * wall_height), wall_thickness, wall_height),
+    pygame.Rect(3 * gap, wall_thickness + ( 4 * wall_height), wall_thickness, wall_height),
+    pygame.Rect(4 * gap, wall_thickness + ( 4 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(5 * gap, wall_thickness + ( 4 * wall_height), wall_thickness, wall_height),
+    pygame.Rect(6 * gap, wall_thickness + ( 4 * wall_height), wall_thickness, wall_height),
+    pygame.Rect(7 * gap, wall_thickness + ( 4 * wall_height), wall_thickness, wall_height),
+    pygame.Rect(8 * gap, wall_thickness + ( 4 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(9 * gap, wall_thickness + ( 4 * wall_height), wall_thickness, wall_height),
+    pygame.Rect(10 * gap, wall_thickness + ( 4 * wall_height), wall_thickness, wall_height),
+
+    # pygame.Rect(1 * gap, wall_thickness + ( 5 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(2 * gap, wall_thickness + ( 5 * wall_height), wall_thickness, wall_height),
+    pygame.Rect(3 * gap, wall_thickness + ( 5 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(4 * gap, wall_thickness + ( 5 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(5 * gap, wall_thickness + ( 5 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(6 * gap, wall_thickness + ( 5 * wall_height), wall_thickness, wall_height),
+    pygame.Rect(7 * gap, wall_thickness + ( 5 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(8 * gap, wall_thickness + ( 5 * wall_height), wall_thickness, wall_height),
+    pygame.Rect(9 * gap, wall_thickness + ( 5 * wall_height), wall_thickness, wall_height),
+    pygame.Rect(10 * gap, wall_thickness + ( 5 * wall_height), wall_thickness, wall_height),
+
+    pygame.Rect(1 * gap, wall_thickness + ( 6 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(2 * gap, wall_thickness + ( 6 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(3 * gap, wall_thickness + ( 6 * wall_height), wall_thickness, wall_height),
+    pygame.Rect(4 * gap, wall_thickness + ( 6 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(5 * gap, wall_thickness + ( 6 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(6 * gap, wall_thickness + ( 6 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(7 * gap, wall_thickness + ( 6 * wall_height), wall_thickness, wall_height),
+    # pygame.Rect(8 * gap, wall_thickness + ( 6 * wall_height), wall_thickness, wall_height),
+    pygame.Rect(9 * gap, wall_thickness + ( 6 * wall_height), wall_thickness, wall_height),
+    pygame.Rect(10 * gap, wall_thickness + ( 6 * wall_height), wall_thickness, wall_height),
+
+
+# Plataformas horizontais
+    
+
+    # pygame.Rect(wall_thickness, 1 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness, 2 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness, 3 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness, 4 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness, 5 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness, 6 * gap, wall_length, wall_thickness),
+
+    # pygame.Rect(wall_thickness + ( 1 * wall_length), 1 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + ( 1 * wall_length), 2 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + ( 1 * wall_length), 3 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + ( 1 * wall_length), 4 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + ( 1 * wall_length), 5 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + ( 1 * wall_length), 6 * gap, wall_length, wall_thickness),
+
+    pygame.Rect(wall_thickness + ( 2 * wall_length), 1 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + ( 2 * wall_length), 2 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + ( 2 * wall_length), 3 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + ( 2 * wall_length), 4 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + ( 2 * wall_length), 5 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + ( 2 * wall_length), 6 * gap, wall_length, wall_thickness),
+
+    # pygame.Rect(wall_thickness + ( 3 * wall_length), 1 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + ( 3 * wall_length), 2 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + ( 3 * wall_length), 3 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + ( 3 * wall_length), 4 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + ( 3 * wall_length), 5 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + ( 3 * wall_length), 6 * gap, wall_length, wall_thickness),
+
+    # pygame.Rect(wall_thickness + ( 4 * wall_length), 1 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + ( 4 * wall_length), 2 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + ( 4 * wall_length), 3 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + ( 4 * wall_length), 4 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + ( 4 * wall_length), 5 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + ( 4 * wall_length), 6 * gap, wall_length, wall_thickness),
+
+    # pygame.Rect(wall_thickness + (5 * wall_length), 1 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + (5 * wall_length), 2 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + (5 * wall_length), 3 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + (5 * wall_length), 4 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + (5 * wall_length), 5 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + (5 * wall_length), 6 * gap, wall_length, wall_thickness),
+
+    pygame.Rect(wall_thickness + (6 * wall_length), 1 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + (6 * wall_length), 2 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + (6 * wall_length), 3 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + (6 * wall_length), 4 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + (6 * wall_length), 5 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + (6 * wall_length), 6 * gap, wall_length, wall_thickness),
+
+    pygame.Rect(wall_thickness + (7 * wall_length), 1 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + (7 * wall_length), 2 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + (7 * wall_length), 3 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + (7 * wall_length), 4 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + (7 * wall_length), 5 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + (7 * wall_length), 6 * gap, wall_length, wall_thickness),
+
+    # pygame.Rect(wall_thickness + (8 * wall_length), 1 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + (8 * wall_length), 2 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + (8 * wall_length), 3 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + (8 * wall_length), 4 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + (8 * wall_length), 5 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + (8 * wall_length), 6 * gap, wall_length, wall_thickness),
+
+    # pygame.Rect(wall_thickness + (9 * wall_length), 1 * gap, wall_length, wall_thickness),
+    pygame.Rect(wall_thickness + (9 * wall_length), 2 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + (9 * wall_length), 3 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + (9 * wall_length), 4 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + (9 * wall_length), 5 * gap, wall_length, wall_thickness),
+    # pygame.Rect(wall_thickness + (9 * wall_length), 6 * gap, wall_length, wall_thickness),
 ]
 
 def check_collision(x, y, radius, walls):
@@ -41,20 +190,6 @@ while running:
             running = False
 
     if not game_over:
-        # data = arduino.readline().decode('utf-8').strip()
-        # if data:
-        #     try:
-        #         print(data.split())
-        #         xValue, yValue, _ = data.split()
-        #         xValue = int(xValue.split(":")[1])
-        #         yValue = int(yValue.split(":")[1])
-
-        #         x += (xValue - 507) // 50
-        #         y += (yValue - 505) // 50
-
-        #     except ValueError:
-        #         pass
-
         screen.fill((0, 0, 0))
 
         for wall in walls:
@@ -72,5 +207,3 @@ while running:
 
     pygame.display.flip()
     clock.tick(60)
-
-pygame.quit()
