@@ -190,6 +190,18 @@ while running:
             running = False
 
     if not game_over:
+        # data = arduino.readline().decode('utf-8').strip()
+        # if data:
+        #     try:
+        #         print(data.split())
+        #         xValue, yValue, _ = data.split()
+        #         xValue = int(xValue.split(":")[1])
+        #         yValue = int(yValue.split(":")[1])
+        #         x += (xValue - 507) // 50
+        #         y += (yValue - 505) // 50
+        #     except ValueError:
+        #         pass
+        
         screen.fill((0, 0, 0))
 
         for wall in walls:
